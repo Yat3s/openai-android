@@ -1,6 +1,8 @@
 package com.yat3s.openai.api.service
 
 import com.yat3s.openai.api.Config
+import com.yat3s.openai.api.model.ImageGenerationApiRequestBody
+import com.yat3s.openai.api.model.ImageGenerationApiResponse
 import com.yat3s.openai.api.model.TextCompletionApiRequestBody
 import com.yat3s.openai.api.model.TextCompletionApiResponse
 import retrofit2.Response
@@ -18,4 +20,13 @@ internal interface OpenAIService {
         @Header("Authorization") authorization: String,
         @Body requestBody: TextCompletionApiRequestBody
     ): Response<TextCompletionApiResponse>
+
+    @Headers(
+        "content-type: application/json",
+    )
+    @POST(Config.URL_IMAGE_GENERATION)
+    suspend fun imageGeneration(
+        @Header("Authorization") authorization: String,
+        @Body requestBody: ImageGenerationApiRequestBody
+    ): Response<ImageGenerationApiResponse>
 }

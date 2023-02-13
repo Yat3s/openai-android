@@ -1,52 +1,58 @@
 package com.yat3s.openai.api
 
+import com.yat3s.openai.api.model.ImageGenerationApiRequestBody
+import com.yat3s.openai.api.model.ImageGenerationResponse
 import com.yat3s.openai.api.model.TextCompletionApiRequestBody
 import com.yat3s.openai.api.model.TextCompletionResponse
 import com.yat3s.openai.api.repository.OpenAIRepository
 
 class OpenAIClient internal constructor(
-    private val builder: Builder
+    private val builder: OpenAIClientBuilder
 ) {
-    class Builder(val apiKey: String) {
-        internal var model: String = Config.DEFAULT_MODEL_TEXT_COMPLETION
-        internal var temperature: Float = Config.DEFAULT_TEMPERATURE
-        internal var maxTokens: Int = Config.DEFAULT_MAX_TOKENS
-
-        fun model(model: String) = apply {
-            this.model = model
-        }
-
-        fun temperature(temperature: Float) = apply {
-            this.temperature = temperature
-        }
-
-        fun maxTokens(maxTokens: Int) = apply {
-            this.maxTokens = maxTokens
-        }
-
-        fun build(): OpenAIClient = OpenAIClient(this)
-    }
-
     suspend fun textCompletion(prompt: String): TextCompletionResponse? {
-        val apiResponse = OpenAIRepository.textCompletion(
-            builder.apiKey,
-            TextCompletionApiRequestBody.fromBuilder(builder, prompt)
-        )
+        val apiResponse = OpenAIRepository().textCompletion(
+            builder.apiKey, builder.toRequestBody(prompt) as TextCompletionApiRequestBody
+        ) ?: return null
 
-        apiResponse?.error?.let {
+        apiResponse.error?.let {
             return TextCompletionResponse(
-                text = apiResponse.error?.message,
+                errorMessage = it.message,
                 apiResponseBody = apiResponse,
             )
         }
 
-        val apiResponseChoices = apiResponse?.choices
+        val apiResponseChoices = apiResponse.choices
         if (apiResponseChoices.isNullOrEmpty()) {
-            return null
+            return TextCompletionResponse(
+                errorMessage = "Has response but no choice.",
+                apiResponseBody = apiResponse,
+            )
         }
 
         return TextCompletionResponse(
             text = apiResponseChoices[0].text,
+            apiResponseBody = apiResponse,
+        )
+    }
+
+    suspend fun imageGeneration(
+        prompt: String
+    ): ImageGenerationResponse? {
+        val apiResponse = OpenAIRepository().imageGeneration(
+            builder.apiKey, builder.toRequestBody(prompt) as ImageGenerationApiRequestBody
+        ) ?: return null
+
+        apiResponse.error?.let {
+            return ImageGenerationResponse(
+                errorMessage = it.message,
+                apiResponseBody = apiResponse,
+            )
+        }
+
+        return ImageGenerationResponse(
+            urls = apiResponse.data?.map {
+                it.url
+            },
             apiResponseBody = apiResponse,
         )
     }

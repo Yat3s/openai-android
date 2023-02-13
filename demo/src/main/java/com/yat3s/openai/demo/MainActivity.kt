@@ -3,7 +3,9 @@ package com.yat3s.openai.demo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import com.yat3s.openai.api.ImageGenerationBuilder
 import com.yat3s.openai.api.OpenAIClient
+import com.yat3s.openai.api.TextCompletionBuilder
 import com.yat3s.openai.demo.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -26,9 +28,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun ask(text: String) {
         GlobalScope.launch {
-            val response = OpenAIClient.Builder(BuildConfig.OPENAI_API_KEY).build().textCompletion(text)
+//            val response = TextCompletionBuilder(BuildConfig.OPENAI_API_KEY).build().textCompletion(text)
+//            withContext(Dispatchers.Main) {
+//                binding.textview.text = "Output: ${response?.text}"
+//            }
+
+            val response = ImageGenerationBuilder(BuildConfig.OPENAI_API_KEY).build().imageGeneration(text)
             withContext(Dispatchers.Main) {
-                binding.textview.text = "Output: ${response?.text}"
+                binding.textview.text = "Output: ${response?.urls.toString()}, ${response?.errorMessage}"
             }
         }
     }

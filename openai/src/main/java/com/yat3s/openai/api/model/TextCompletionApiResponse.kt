@@ -12,9 +12,3 @@ data class TextCompletionChoice(
     val index: Int?,
     val finish_reason: String?,
 )
-
-data class TextCompletionError(
-    val message: String?,
-    var type: String? = null,
-    var code: String? = null,
-)
