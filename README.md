@@ -25,7 +25,6 @@ Please go [Open AI text completion parameters](https://platform.openai.com/docs/
 ## Image Generation(DALL-E)
 ```
 val response = ImageGenerationBuilder(BuildConfig.OPENAI_API_KEY).build().imageGeneration("Your prompt")
-
 ```
 #### Advanced Configurations
 ```
