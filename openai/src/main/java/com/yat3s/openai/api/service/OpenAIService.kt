@@ -1,5 +1,6 @@
 package com.yat3s.openai.api.service
 
+import com.yat3s.openai.api.Config
 import com.yat3s.openai.api.model.TextCompletionApiRequestBody
 import com.yat3s.openai.api.model.TextCompletionApiResponse
 import retrofit2.Response
@@ -12,7 +13,7 @@ internal interface OpenAIService {
     @Headers(
         "content-type: application/json",
     )
-    @POST("completions")
+    @POST(Config.URL_TEXT_COMPLETION)
     suspend fun textCompletion(
         @Header("Authorization") authorization: String,
         @Body requestBody: TextCompletionApiRequestBody

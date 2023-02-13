@@ -10,6 +10,7 @@ class OpenAIClient internal constructor(
     class Builder(val apiKey: String) {
         internal var model: String = Config.DEFAULT_MODEL_TEXT_COMPLETION
         internal var temperature: Float = Config.DEFAULT_TEMPERATURE
+        internal var maxTokens: Int = Config.DEFAULT_MAX_TOKENS
 
         fun model(model: String) = apply {
             this.model = model
@@ -17,6 +18,10 @@ class OpenAIClient internal constructor(
 
         fun temperature(temperature: Float) = apply {
             this.temperature = temperature
+        }
+
+        fun maxTokens(maxTokens: Int) = apply {
+            this.maxTokens = maxTokens
         }
 
         fun build(): OpenAIClient = OpenAIClient(this)
@@ -27,6 +32,14 @@ class OpenAIClient internal constructor(
             builder.apiKey,
             TextCompletionApiRequestBody.fromBuilder(builder, prompt)
         )
+
+        apiResponse?.error?.let {
+            return TextCompletionResponse(
+                text = apiResponse.error?.message,
+                apiResponseBody = apiResponse,
+            )
+        }
+
         val apiResponseChoices = apiResponse?.choices
         if (apiResponseChoices.isNullOrEmpty()) {
             return null

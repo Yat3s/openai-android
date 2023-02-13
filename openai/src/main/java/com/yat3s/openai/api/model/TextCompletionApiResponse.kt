@@ -1,13 +1,20 @@
 package com.yat3s.openai.api.model
 
 data class TextCompletionApiResponse(
-    val id: String?,
-    val created: String?,
-    val choices: List<TextCompletionChoice>?,
+    var id: String? = null,
+    var created: String? = null,
+    var choices: List<TextCompletionChoice>? = null,
+    var error: TextCompletionError? = null,
 )
 
 data class TextCompletionChoice(
     val text: String?,
-    val index: Int,
+    val index: Int?,
     val finish_reason: String?,
+)
+
+data class TextCompletionError(
+    val message: String?,
+    var type: String? = null,
+    var code: String? = null,
 )
