@@ -1,8 +1,12 @@
 package com.yat3s.openai.demo
 
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.core.view.marginEnd
+import androidx.core.view.updatePaddingRelative
+import com.squareup.picasso.Picasso
 import com.yat3s.openai.api.ImageGenerationBuilder
 import com.yat3s.openai.api.OpenAIClient
 import com.yat3s.openai.api.TextCompletionBuilder
@@ -21,21 +25,42 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.submit.setOnClickListener {
-            ask(binding.input.text.toString())
+        binding.textCompletion.setOnClickListener {
+            GlobalScope.launch {
+                val response = TextCompletionBuilder(BuildConfig.OPENAI_API_KEY)
+                    .build()
+                    .textCompletion(binding.input.text.toString())
+                withContext(Dispatchers.Main) {
+                    binding.textCompletionOutput.text = "Output: ${response?.text}"
+                }
+            }
         }
-    }
 
-    private fun ask(text: String) {
-        GlobalScope.launch {
-//            val response = TextCompletionBuilder(BuildConfig.OPENAI_API_KEY).build().textCompletion(text)
-//            withContext(Dispatchers.Main) {
-//                binding.textview.text = "Output: ${response?.text}"
-//            }
+        binding.imageGeneration.setOnClickListener {
+            GlobalScope.launch {
+                val response = ImageGenerationBuilder(BuildConfig.OPENAI_API_KEY)
+                    .generateCount(2)
+                    .build()
+                    .imageGeneration(binding.input.text.toString())
 
-            val response = ImageGenerationBuilder(BuildConfig.OPENAI_API_KEY).build().imageGeneration(text)
-            withContext(Dispatchers.Main) {
-                binding.textview.text = "Output: ${response?.urls.toString()}, ${response?.errorMessage}"
+                withContext(Dispatchers.Main) {
+                    val urls = response?.urls
+                    if (!urls.isNullOrEmpty()) {
+                        urls.forEach {
+                            val imageView = ImageView(this@MainActivity)
+                            binding.imageGenerationContainer.addView(imageView)
+                            imageView.layoutParams.apply {
+                                width = 500
+                                height = 500
+                            }
+                            imageView.updatePaddingRelative(end = 12)
+
+                            Picasso.get().load(it).fit()
+                                .centerInside()
+                                .into(imageView)
+                        }
+                    }
+                }
             }
         }
     }

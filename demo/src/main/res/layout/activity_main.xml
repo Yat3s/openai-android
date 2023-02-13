@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:padding="12dp"
     tools:context=".MainActivity">
 
     <EditText
@@ -14,18 +15,54 @@
         android:hint="Prompt:" />
 
     <TextView
-        android:id="@+id/textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="24dp"
+        android:text="Text Completion"/>
+
+    <TextView
+        android:id="@+id/text_completion_output"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
+        android:layout_marginTop="12dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
         android:text="Output: " />
 
     <Button
-        android:id="@+id/submit"
+        android:id="@+id/text_completion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Text Completion" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="24dp"
+        android:text="Image Generation"/>
+
+    <Button
+        android:id="@+id/image_generation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
-        android:text="Text Completion" />
+        android:text="Image Generation" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/image_generation_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:dividerPadding="4dp"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
 
 </LinearLayout>
