@@ -14,9 +14,9 @@ val response = TextCompletionBuilder(BuildConfig.OPENAI_API_KEY).build().textCom
 #### Advanced Configurations
 ```
 val response = TextCompletionBuilder(BuildConfig.OPENAI_API_KEY)
-    .maxTokens(1000)
-    .temperature(0.6f)
-    .model("you model")
+    .maxTokens(1000) // 1 - 4000, default 500
+    .temperature(0.6f) // 0 - 2f, default 1f
+    .model("you model") // default "text-davinci-003"
     .build().textCompletion(text)
 ```
 
@@ -38,7 +38,7 @@ val response = ImageGenerationBuilder(BuildConfig.OPENAI_API_KEY)
 
 
 # How to get API KEY
-Please go to [Open AI API KEY](https://platform.openai.com/account/api-keys) to create your API KEY.
+Please go to [Open AI API KEY](https://platform.openai.com/account/api-keys) to create your API keys.
 ![image](https://user-images.githubusercontent.com/14801837/218364643-bc5990e1-5122-49a9-a7dc-38c860a0c0a9.png)
 
 
