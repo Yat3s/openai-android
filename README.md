@@ -13,7 +13,7 @@ val response = TextCompletionBuilder(BuildConfig.OPENAI_API_KEY).build().textCom
 
 #### Advanced Configurations
 ```
-val response = TextCompletionBuilder(BuildConfig.OPENAI_API_KEY)
+val response = TextCompletionBuilder(OPENAI_API_KEY)
     .maxTokens(1000) // 1 - 4000, default 500
     .temperature(0.6f) // 0 - 2f, default 1f
     .model("you model") // default "text-davinci-003"
@@ -28,7 +28,7 @@ val response = ImageGenerationBuilder(BuildConfig.OPENAI_API_KEY).build().imageG
 ```
 #### Advanced Configurations
 ```
-val response = ImageGenerationBuilder(BuildConfig.OPENAI_API_KEY)
+val response = ImageGenerationBuilder(OPENAI_API_KEY)
     .generateCount(2) // The image count to generate, default 1
     .imageSize("512x512") // "256x256", "512x512", "1024x1024" are supported, default "1024x1024"
     .imageResponseFormat("url") // "url", "b64_json" are supported, default "url"
