@@ -20,7 +20,7 @@ val response = TextCompletionBuilder(OPENAI_API_KEY)
     .build().textCompletion(text)
 ```
 
-Please check the definition on [Open AI text completion parameters]
+Please check the definition on [Open AI text completion parameters](https://platform.openai.com/docs/api-reference/completions/create)
 
 ## Image Generation(DALL-E)
 ```
