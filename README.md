@@ -1,5 +1,10 @@
 # OpenAI Android
 The project for OpenAI official APIs
+- [x] Text Completion
+- [x] Image Generation(DALL-E)
+- [ ] Playground
+- [ ] ChatGPT Web API(ChatGPT Plus)
+- [ ] New Bing AI API
 
 # Usages
 ```
