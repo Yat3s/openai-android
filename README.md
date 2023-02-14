@@ -3,7 +3,7 @@ The project for OpenAI official APIs
 
 # Usages
 ```
-implementation 'com.yat3s.openai:openai-android:0.0.3'
+implementation 'com.yat3s.openai:openai-android:0.0.4'
 ```
 
 ## Text Completion
