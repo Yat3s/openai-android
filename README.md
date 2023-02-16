@@ -11,6 +11,13 @@ The project for OpenAI official APIs
 implementation 'com.yat3s.openai:openai-android:0.0.4'
 ```
 
+Or exclude OkHttp if you're using a version < `OkHttp3: 4.10.0`
+```
+implementation 'com.yat3s.openai:openai-android:0.0.4' {
+   exclude group: "com.squareup.okhttp3"
+}
+```
+
 ## Text Completion
 ```
 val response = TextCompletionBuilder(BuildConfig.OPENAI_API_KEY).build().textCompletion("Your prompt)
