@@ -11,7 +11,7 @@ The project for OpenAI official APIs
 implementation 'com.yat3s.openai:openai-android:0.0.4'
 ```
 
-Or exclude OkHttp if you're using a version < `OkHttp3: 4.10.0`
+Or exclude okhttp if you're using a version < `okhttp3: 4.10.0` in your project.
 ```
 implementation 'com.yat3s.openai:openai-android:0.0.4' {
    exclude group: "com.squareup.okhttp3"
